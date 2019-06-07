@@ -3,9 +3,9 @@
     
     <Header></Header>
     <Cover></Cover>
-    <OurServices></OurServices>
-    <no-ssr placeholder="Loading...">
-      <Categories></Categories>
+    <OurServices></OurServices> 
+    <no-ssr placeholder="Carregando...">
+      <Categories></Categories> <!-- TODO: Tornar compatível com SSR, uma versão com apenas CSS pode ser viavel dependendo do caso -->
     </no-ssr>
     <Support></Support>
     <Footer></Footer>

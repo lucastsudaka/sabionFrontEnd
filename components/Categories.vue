@@ -10,8 +10,8 @@
         margin-bottom:76px;
         li {
             display: inline;
-            padding-right:50px;
-            padding-left:50px;
+            padding-right:80px;
+            padding-left:80px;
             font-size:18px;
         }
         .tab-slider {
