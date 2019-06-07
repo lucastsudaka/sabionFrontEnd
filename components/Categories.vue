@@ -129,7 +129,7 @@
     </div>
     <section class="section">
         <div class="main-container">
-            <!-- tabs, usando as tabs do Bulma -->
+            <!-- tabs -->
             <div class="categories-tab is-centered">
                 <ul>
                     <li class="has-cursor-pointer" @click="switchCategory('All')" :class="selectedCategory == 'All' ? 'is-active': ''"><a id="tab-category-All" >All</a></li>
@@ -175,7 +175,6 @@
 <script>
 import { vueWindowSizeMixin } from 'vue-window-size';
 
-
 export default {
     mixins:[vueWindowSizeMixin],
     data: () => ({
@@ -208,31 +207,36 @@ export default {
         findCategory(category_id) {
             return this.categories.find(x => x.id === category_id);  
         },
+         // alterar a categoria -->
         switchCategory(category_id) {
             this.selectedCategory = category_id;
             this.domSlideCategory();
-            // usnado jquery
 
         },
-        domSlideCategory() {
-            const el = $('#tab-category-'+this.selectedCategory); //FIXME -> Utilizar refs!
-            var position = el.parent().position();
-            var width = el.parent().outerWidth();
-            $(".tab-slider").css({"left":+ position.left,"width": width});
+         // o slide (funciona como underline) do nome das categorias
+        domSlideCategory() { // FIXME -> Utlizar refs e sem Jquery!
+            const el = $('#tab-category-'+this.selectedCategory); 
+            const position = el.parent().position();
+            const width = el.parent().outerWidth();
+            $(".tab-slider").css({"left":+ position.left,"width": width}); 
         },
+         // precisamos retonrar os itens de acordo com o filtro 
         filteredItems() {
-            // precisamos adicionar a queue para a alteração no DOM;
             setTimeout(() => {
                 this.domMasonry();
             },1);
             if(this.selectedCategory === "All") {
-            return  this.items;
+                return  this.items;
             } else {
-            return this.items.filter(x => x.category_id == this.selectedCategory);
+                //prefiro em Lodash mas vamos ecopnomizar libs né
+                return this.items.filter(x => x.category_id == this.selectedCategory);
             }
         },
+
+        // aqui nossa alteração direta no DOM para o masonry 
         domMasonry() {
-            if(this.windowWidth > 1) {
+            // em mobile, não preciamos executar isso
+            if(this.windowWidth > 768) {
                 // o element que será utilizado na masonry
                 const masonryEl= this.$refs.masonry;
                 // nosso import do Masonry  foi feito nas configs do Nuxt
@@ -245,14 +249,15 @@ export default {
                 });
                 msnry.reloadItems()
             }
- 
 
         }
     },
     watch: {
+        // vamos recalcular algumas coisas caso haja redimensionamento 
         windowWidth: {
             immediate:true,
             handler(newV) {
+                // garantindo que vá para o final da queue 
                 setTimeout(() => {
                     this.domMasonry();        
                     this.domSlideCategory();
