@@ -61,6 +61,7 @@
             width:25%;
         }
     .item {
+
             width:25%;
             height:350px;        
             margin-bottom:20px;
@@ -69,12 +70,21 @@
         
             &.big {
                 height:400px;  
-
+ 
             }
             .content {
                 height:100%;
                 margin-right:-20px;
                 border-radius:10px;
+                text-align:center;
+                padding-top:30px;
+                color:#fff;
+                font-size:40px;
+                &:hover {
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                    margin-top:-5px;
+                    transition: all 0.3s ease-in-out;
+                }
                 
             }
     }
@@ -122,11 +132,12 @@
             <!-- tabs, usando as tabs do Bulma -->
             <div class="categories-tab is-centered">
                 <ul>
-                    <li @click="switchCategory('All')" :class="selectedCategory == 'All' ? 'is-active': ''"><a id="tab-category-All" >All</a></li>
+                    <li class="has-cursor-pointer" @click="switchCategory('All')" :class="selectedCategory == 'All' ? 'is-active': ''"><a id="tab-category-All" >All</a></li>
                     <li v-for="(category, index) in categories"                    
                         :class="[selectedCategory == category.id ? 'is-active': '']"                   
                         :data="category"
-                        :key="`category-${index}`"         
+                        :key="`category-${index}`"  
+                        class="has-cursor-pointer"       
                         @click="switchCategory(category.id)"             
                         :label="category.name">
                             <a  :id="'tab-category-'+category.id">{{category.name}}</a>
@@ -147,7 +158,7 @@
                     class="item"
                     :class="(index) % 2 == 0 ? ' big ' : '  '"                     
                     :data="item"
-                    :key="`fic-${index}`"   >  
+                    :key="`fic-${index}`"   > 
                                         
                         <div class="content"
                             :style="{backgroundColor: findCategory(item.category_id).color}">
