@@ -1,0 +1,23 @@
+@import "~/assets/var.scss";
+.main-container {
+    max-width:1200px;
+    margin-right:auto;
+    margin-left:auto;
+
+}
+.title-main {
+    font-size:75px;
+    line-height:85px;    
+
+}
+h4.title-secondary {
+    font-size:22px;
+    font-weight:bold;
+    color:$primary;
+}
+@media (max-width: 768px) {
+    .title-main {
+        font-size:45px;
+        line-height:55px;    
+    }
+}
